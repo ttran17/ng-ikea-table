@@ -1,0 +1,29 @@
+{
+  "name": "ng-ikea-table",
+  "version": "1.0.0",
+  "homepage": "https://github.com/ttran17/ng-ikea-table",
+  "authors": [
+    "Thy Tran <ttran17@gmail.com>"
+  ],
+  "description": "An IKEA-inspired AngularJS library for working with tables",
+  "main": "index.js",
+  "keywords": [
+    "angular",
+    "table",
+    "ikea",
+    "do-it-yourself"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-bootstrap": "angular-ui-bootstrap-bower#~0.14.3",
+    "angular-mocks": "~1.4.7"
+  }
+}
