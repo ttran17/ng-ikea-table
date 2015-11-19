@@ -1,5 +1,5 @@
 /**
- * These unit tests are taken directly from teun @ https://github.com/Teun/thenBy.js/blob/master/tests/thenby.tests.js
+ * These unit tests are taken directly from teun {@link https://github.com/Teun/thenBy.js/blob/master/tests/thenby.tests.js}
  *
  * Instead of mocha & chai we've translated them to use karma & jasmine. That is all. No credit or warranties, expressed or implied,
  * should be inferred.
