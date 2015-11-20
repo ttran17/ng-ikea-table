@@ -24,6 +24,8 @@
   "dependencies": {
     "angular": "~1.4.7",
     "angular-bootstrap": "angular-ui-bootstrap-bower#~0.14.3",
-    "angular-mocks": "~1.4.7"
+    "angular-mocks": "~1.4.7",
+    "bootstrap": "3.3.5",
+    "datatables": "DataTables#1.10.10"
   }
 }

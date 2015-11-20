@@ -1,0 +1,21 @@
+<table class="table table-bordered table-striped table-hover dataTable">
+    <caption>Your Advertisement Here!</caption>
+    <thead>
+    <tr>
+        <th class="sorting">Name</th>
+        <th class="sorting">Age</th>
+        <th class="sorting">Nationality</th>
+        <th class="sorting">Canon</th>
+        <th class="sorting">Death</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in controller.rows">
+        <td> {{::row.name}} </td>
+        <td> {{::row.age}} </td>
+        <td> {{::row.nationality}} </td>
+        <td> {{::row.canon}} </td>
+        <td> {{::row.death}} </td>
+    </tr>
+    </tbody>
+</table>
