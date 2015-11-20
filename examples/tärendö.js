@@ -9,10 +9,10 @@ angular.module('ng.ikeaTable.example.tärendö',['ng.ikeaTable.core'])
             restrict: 'EA',
             scope: {},
             controller: 'NgIkeaTableController',
-            controllerAs: 'controller',
+            controllerAs: 'vm',
             templateUrl: 'tärendö.html',
             link: function(scope, iElem, iAttrs) {
-                scope.controller.rows = [
+                scope.vm.rows = [
                     {name: 'Évariste Galois', age: 20, nationality: 'French', canon: 'Galois Theory', death: 'untimely'},
                     {name: 'Józef Marcinkiewicz', age: 30, nationality: 'Polish', canon: 'Marcinkiewicz interpolation theorem', death: 'untimely'},
                     {name: 'Niels Abel', age: 26, nationality: 'Norwegian', canon: 'abelian', death: 'untimely'},
