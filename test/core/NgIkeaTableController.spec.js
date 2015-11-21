@@ -1,5 +1,5 @@
 describe('NgIkeaTableController', function() {
-    var controller;
+    var vm;
     var $log;
     var teunSort;
     var cityData;
@@ -14,7 +14,7 @@ describe('NgIkeaTableController', function() {
 
         spyOn($log,'warn');
 
-        controller = $controller('NgIkeaTableController', {$log: $log, teunSort: teunSort});
+        vm = $controller('NgIkeaTableController', {$log: $log, teunSort: teunSort});
 
         cityData = [
             { id: 7, name:  "Amsterdam", population: 750000, country: "Netherlands" },
@@ -25,49 +25,99 @@ describe('NgIkeaTableController', function() {
             { id: 44, name: "Stuttgard", population: 600000, country: "Germany" }
         ];
 
-        controller.rows = cityData;
+        vm.rows = cityData;
+
+        vm.sortable.columns = {
+            'id': {direction: undefined},
+            'name': {direction: undefined},
+            'population': {direction: undefined},
+            'country': {direction: undefined}
+        }
     }));
 
     describe('sort function', function() {
         it('should be a noop if no column name is specified', function() {
-            controller.sort({});
+            vm.sort({});
             expect($log.warn).toHaveBeenCalledWith("Calling sort without any column arg is a no-op.");
+            vm.sort({}, function(v) {return v.id});
+            expect($log.warn).toHaveBeenCalledWith("Calling sort without specifying a column arg is a no-op.");
         });
         it('should sort by property name', function() {
-            controller.sort({}, 'id');
+            vm.sort({}, 'id');
+            expect(vm.sortable.columns['id'].direction).toBe(true);
             expect(cityData[1].name).toBe("Amsterdam");
             expect(cityData[4].name).toBe("Rotterdam");
         });
         it('should sort by unary function', function() {
-            controller.sort({}, function(v) {return v.id});
+            vm.sort({}, 'id', function(v) {return v.id});
             expect(cityData[1].name).toBe("Amsterdam");
             expect(cityData[4].name).toBe("Rotterdam");
         });
         it('should sort by function', function() {
-            controller.sort({}, function(v1, v2) {return v1.id - v2.id});
+            vm.sort({}, 'id', function(v1, v2) {return v1.id - v2.id});
             expect(cityData[1].name).toBe("Amsterdam");
             expect(cityData[4].name).toBe("Rotterdam");
         });
         it('should sort by multiple columns if event.shiftKey is true', function() {
-            controller.sort({}, 'country');
-            controller.sort({shiftKey: true}, 'population');
+            vm.sort({}, 'country');
+            vm.sort({shiftKey: true}, 'population');
             expect(cityData[0].name).toBe("Düsseldorf");
             expect(cityData[5].name).toBe("Amsterdam");
         });
         it('should sort by multiple columns if event.ctrlKey is true', function() {
-            controller.sort({}, 'country');
-            controller.sort({ctrlKey: true}, 'population');
+            vm.sort({}, 'country');
+            vm.sort({ctrlKey: true}, 'population');
             expect(cityData[0].name).toBe("Düsseldorf");
             expect(cityData[5].name).toBe("Amsterdam");
         });
         it('should go back to sorting by single column if event.shiftKey is true then false', function() {
-            controller.sort({}, 'country');
-            controller.sort({ctrlKey: true}, 'population');
+            vm.sort({}, 'country');
+            vm.sort({ctrlKey: true}, 'population');
             expect(cityData[0].name).toBe("Düsseldorf");
             expect(cityData[5].name).toBe("Amsterdam");
-            controller.sort({}, 'id');
+            vm.sort({}, 'id');
             expect(cityData[0].name).toBe("Berlin");
             expect(cityData[5].name).toBe("Stuttgard");
+        });
+        it('should sort by property name ascending; then by property name descending', function() {
+            vm.sort({}, 'id');
+            expect(vm.sortable.columns['id'].direction).toBe(true);
+            expect(cityData[1].name).toBe("Amsterdam");
+            expect(cityData[4].name).toBe("Rotterdam");
+            vm.sort({}, 'id');
+            expect(vm.sortable.columns['id'].direction).toBe(false);
+            expect(cityData[4].name).toBe("Amsterdam");
+            expect(cityData[1].name).toBe("Rotterdam");
+        });
+        it('should sort by property name ascending; then by property name descending when event.shiftKey is true', function() {
+            vm.sort({}, 'id');
+            expect(vm.sortable.columns['id'].direction).toBe(true);
+            expect(cityData[1].name).toBe("Amsterdam");
+            expect(cityData[4].name).toBe("Rotterdam");
+            vm.sort({shiftKey: true}, 'id');
+            expect(vm.sortable.columns['id'].direction).toBe(false);
+            expect(cityData[4].name).toBe("Amsterdam");
+            expect(cityData[1].name).toBe("Rotterdam");
+        });
+        it('should sort by id ascending; then by name ascending', function() {
+            vm.sort({}, 'id');
+            expect(vm.sortable.columns['id'].direction).toBe(true);
+            expect(cityData[1].name).toBe("Amsterdam");
+            expect(cityData[4].name).toBe("Rotterdam");
+            vm.sort({}, 'name');
+            expect(vm.sortable.columns['name'].direction).toBe(true);
+            expect(cityData[1].name).toBe("Berlin");
+            expect(cityData[5].name).toBe("The Hague");
+        });
+        it('should sort by country then population; finally by population then descending country', function() {
+            vm.sort({}, 'country');
+            vm.sort({shiftKey: true}, 'population');
+            expect(cityData[0].name).toBe("Düsseldorf");
+            expect(cityData[5].name).toBe("Amsterdam");
+            vm.sort({shiftKey: true}, 'country');
+            expect(cityData[0].name).toBe("The Hague");
+            expect(cityData[2].name).toBe("Rotterdam");
+            expect(cityData[3].name).toBe("Stuttgard");
         });
     });
 });

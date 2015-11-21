@@ -55,22 +55,40 @@
             vm.$log.warn("Calling sort without any column arg is a no-op.");
             return;
         }
+        if (typeof arguments[1] !== 'string') {
+            vm.$log.warn("Calling sort without specifying a column arg is a no-op.");
+            return;
+        }
+
         predicate0 = predicate0 || (vm.sortable.columns[column0] ? (vm.sortable.columns[column0].predicate || column0) : column0);
 
         if (!(event.shiftKey || event.ctrlKey)) {
             vm.sortable.predicates = [];
+            angular.forEach(vm.sortable.columns, function(value,key) {
+                if (key !== column0) {
+                    value.direction = undefined;
+                }
+            });
         }
+
+        vm.sortable.columns[column0].direction = !vm.sortable.columns[column0].direction;
+
+        vm.sortable.predicates = vm.sortable.predicates.filter(function(d) {
+            return d.column !== column0;
+        });
+
         vm.sortable.predicates.push({
             column: column0,
-            predicate: predicate0
+            predicate: predicate0,
+            descending: vm.sortable.columns[column0].direction ? 1 : -1
         });
 
         var s;
         vm.sortable.predicates.forEach(function(d,i) {
             if (i > 0) {
-                s = s.thenBy(d.predicate);
+                s = s.thenBy(d.predicate, d.descending);
             } else {
-                s = vm.teunSort.firstBy(d.predicate);
+                s = vm.teunSort.firstBy(d.predicate, d.descending);
             }
         });
         vm.rows.sort(s);
