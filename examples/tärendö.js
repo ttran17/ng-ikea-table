@@ -19,7 +19,15 @@ angular.module('ng.ikeaTable.example.tärendö',['ng.ikeaTable.core'])
                     {name: 'Alexander Grothendieck', age: 86, nationality: 'French', canon: 'Fields Medal', death: 'natural'},
                     {name: 'Stanislaw Ulam', age: 75, nationality: 'Polish', canon: 'Borsuk-Ulam Theorem', death: 'natural'},
                     {name: 'Atle Selberg', age: 90, nationality: 'Norwegian', canon: 'Fields Medal', death: 'natural'}
-                ]
+                ];
+
+                scope.vm.sortable.columns = {
+                    'name': scope.vm.initSortStatus(),
+                    'age': scope.vm.initSortStatus(),
+                    'nationality': scope.vm.initSortStatus(),
+                    'canon': scope.vm.initSortStatus(),
+                    'death': scope.vm.initSortStatus()
+                }
             }
         }
     }]);

@@ -55,8 +55,18 @@
             vm.$log.warn("Calling sort without any column arg is a no-op.");
             return;
         }
-        if (typeof arguments[1] !== 'string') {
+        if (typeof column0 !== 'string') {
             vm.$log.warn("Calling sort without specifying a column arg is a no-op.");
+            return;
+        }
+        var noop = true;
+        angular.forEach(vm.sortable.columns, function(value, key) {
+            if (key === column0) {
+                noop = false;
+            }
+        });
+        if (noop) {
+            vm.$log.warn("Calling sort with an unknown column arg is a no-op.");
             return;
         }
 
@@ -67,16 +77,25 @@
             angular.forEach(vm.sortable.columns, function(value,key) {
                 if (key !== column0) {
                     value.direction = undefined;
+                    value.class = {
+                        "sorting": true,
+                        "sorting_asc": false,
+                        "sorting_desc": false
+                    }
                 }
             });
         }
 
         vm.sortable.columns[column0].direction = !vm.sortable.columns[column0].direction;
+        vm.sortable.columns[column0].class = {
+            "sorting": false,
+            "sorting_asc": vm.sortable.columns[column0].direction,
+            "sorting_desc": !vm.sortable.columns[column0].direction
+        };
 
         vm.sortable.predicates = vm.sortable.predicates.filter(function(d) {
             return d.column !== column0;
         });
-
         vm.sortable.predicates.push({
             column: column0,
             predicate: predicate0,
@@ -92,6 +111,22 @@
             }
         });
         vm.rows.sort(s);
+    };
+
+    /**
+     * Convenience method.
+     *
+     * @returns {{direction: undefined, class: {sorting: boolean, sorting_asc: boolean, sorting_desc: boolean}}}
+     */
+    NgIkeaTableController.prototype.initSortStatus = function() {
+        return {
+            direction: undefined,
+            class: {
+                "sorting": true,
+                "sorting_asc": false,
+                "sorting_desc": false
+            }
+        }
     };
 
     ///////////////////////////////////////////////////////////////

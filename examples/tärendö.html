@@ -2,11 +2,11 @@
     <caption>Your Advertisement Here!</caption>
     <thead>
     <tr>
-        <th class="sorting">Name</th>
-        <th class="sorting">Age</th>
-        <th class="sorting">Nationality</th>
-        <th class="sorting">Canon</th>
-        <th class="sorting">Death</th>
+        <th ng-class="vm.sortable.columns['name'].class" ng-click="vm.sort($event,'name')">Name</th>
+        <th ng-class="vm.sortable.columns['age'].class" ng-click="vm.sort($event,'age')">Age</th>
+        <th ng-class="vm.sortable.columns['nationality'].class" ng-click="vm.sort($event,'nationality')">Nationality</th>
+        <th ng-class="vm.sortable.columns['canon'].class" ng-click="vm.sort($event,'canon')">Canon</th>
+        <th ng-class="vm.sortable.columns['death'].class" ng-click="vm.sort($event,'death')">Death</th>
     </tr>
     </thead>
     <tbody>
