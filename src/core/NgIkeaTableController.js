@@ -44,29 +44,14 @@
      * Sorts the column whose key is 'column0'. If specified sorts using predicate0 else
      * sorts by default predicate if specified otherwise sorts by property 'column0'
      *
-     * @param {Object} event jquery $event object
-     * @param {string} column0 name of column to sort
-     * @param {(string|Function)} predicate0 string or function used for sorting column0
+     * @param {Object} event - jquery $event object
+     * @param {string} column0 - name of column to sort
+     * @param {(string|Function)} [predicate0] - string or function used for sorting column0
      */
     NgIkeaTableController.prototype.sort = function(event, column0, predicate0) {
         var vm = this;
 
-        if (arguments.length < 2) {
-            vm.$log.warn("Calling sort without any column arg is a no-op.");
-            return;
-        }
-        if (typeof column0 !== 'string') {
-            vm.$log.warn("Calling sort without specifying a column arg is a no-op.");
-            return;
-        }
-        var noop = true;
-        angular.forEach(vm.sortable.columns, function(value, key) {
-            if (key === column0) {
-                noop = false;
-            }
-        });
-        if (noop) {
-            vm.$log.warn("Calling sort with an unknown column arg is a no-op.");
+        if (!isColumnArgDefined(vm, column0)) {
             return;
         }
 
@@ -77,21 +62,13 @@
             angular.forEach(vm.sortable.columns, function(value,key) {
                 if (key !== column0) {
                     value.direction = undefined;
-                    value.class = {
-                        "sorting": true,
-                        "sorting_asc": false,
-                        "sorting_desc": false
-                    }
+                    value.class = vm.setIconClass(true, false, false);
                 }
             });
         }
 
         vm.sortable.columns[column0].direction = !vm.sortable.columns[column0].direction;
-        vm.sortable.columns[column0].class = {
-            "sorting": false,
-            "sorting_asc": vm.sortable.columns[column0].direction,
-            "sorting_desc": !vm.sortable.columns[column0].direction
-        };
+        vm.sortable.columns[column0].class = vm.setIconClass(false, vm.sortable.columns[column0].direction, !vm.sortable.columns[column0].direction);
 
         vm.sortable.predicates = vm.sortable.predicates.filter(function(d) {
             return d.column !== column0;
@@ -113,20 +90,69 @@
         vm.rows.sort(s);
     };
 
+
+    var isColumnArgDefined = function(vm, column0) {
+        if (column0 === undefined) {
+            vm.$log.warn("Calling sort without any column arg is a no-op.");
+            return false;
+        }
+        if (typeof column0 !== 'string') {
+            vm.$log.warn("Calling sort without specifying a column arg is a no-op.");
+            return false;
+        }
+        var noop = true;
+        angular.forEach(vm.sortable.columns, function(value, key) {
+            if (key === column0) {
+                noop = false;
+            }
+        });
+        if (noop) {
+            vm.$log.warn("Calling sort with an unknown column arg is a no-op.");
+            return false;
+        }
+
+        return true;
+    };
+
     /**
      * Convenience method.
      *
      * @returns {{direction: undefined, class: {sorting: boolean, sorting_asc: boolean, sorting_desc: boolean}}}
      */
     NgIkeaTableController.prototype.initSortStatus = function() {
+        var vm = this;
+
         return {
             direction: undefined,
-            class: {
-                "sorting": true,
-                "sorting_asc": false,
-                "sorting_desc": false
-            }
+            class: vm.setIconClass(true, false, false)
         }
+    };
+
+    /**
+     * Convenience method.
+     *
+     * @param {boolean} sorting - display 'sorting available' icon if true
+     * @param {boolean} sorting_asc - display 'sort ascending' icon if true
+     * @param {boolean} sorting_desc - display 'sort descending' icon if true
+     *
+     * @returns {{sorting: boolean, sorting_asc: boolean, sorting_desc: boolean}}
+     */
+    NgIkeaTableController.prototype.setIconClass = function(sorting, sorting_asc, sorting_desc) {
+        return {
+            "sorting": sorting,
+            "sorting_asc": sorting_asc,
+            "sorting_desc": sorting_desc
+        }
+    };
+
+    /**
+     *
+     * @param {string} column0
+     * @returns {string}
+     */
+    NgIkeaTableController.prototype.getIconClass = function(column0) {
+        var vm = this;
+        return vm.sortable.columns[column0].class;
     };
 
     ///////////////////////////////////////////////////////////////

@@ -1,0 +1,17 @@
+caption {
+    text-align: center;
+    font-weight: bold;
+}
+
+th {
+    position: relative;
+    cursor: pointer;
+}
+
+.bjursta-sorting-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: block;
+    opacity: 0.5;
+}

@@ -1,0 +1,21 @@
+<table class="table table-bordered table-striped table-hover dataTable">
+    <caption>Your Advertisement Here!</caption>
+    <thead>
+    <tr>
+        <th ng-class="vm.getIconClass('name')" ng-click="vm.sort($event,'name')">Name</th>
+        <th ng-class="vm.getIconClass('age')" ng-click="vm.sort($event,'age')">Age</th>
+        <th ng-class="vm.getIconClass('nationality')" ng-click="vm.sort($event,'nationality')">Nationality</th>
+        <th ng-class="vm.getIconClass('canon')" ng-click="vm.sort($event,'canon')">Canon</th>
+        <th ng-class="vm.getIconClass('death')" ng-click="vm.sort($event,'death')">Death</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in vm.rows">
+        <td> {{::row.name}} </td>
+        <td> {{::row.age}} </td>
+        <td> {{::row.nationality}} </td>
+        <td> {{::row.canon}} </td>
+        <td> {{::row.death}} </td>
+    </tr>
+    </tbody>
+</table>
