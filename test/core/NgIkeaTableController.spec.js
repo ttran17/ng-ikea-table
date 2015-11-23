@@ -80,6 +80,8 @@ describe('NgIkeaTableController', function() {
             expect(cityData[0].name).toBe("Düsseldorf");
             expect(cityData[5].name).toBe("Amsterdam");
             vm.sort({}, 'id');
+            expect(vm.sortable.columns['country'].direction).not.toBeDefined();
+            expect(vm.sortable.columns['population'].direction).not.toBeDefined();
             expect(cityData[0].name).toBe("Berlin");
             expect(cityData[5].name).toBe("Stuttgard");
         });
@@ -113,6 +115,7 @@ describe('NgIkeaTableController', function() {
             expect(cityData[1].name).toBe("Amsterdam");
             expect(cityData[4].name).toBe("Rotterdam");
             vm.sort({}, 'name');
+            expect(vm.sortable.columns['id'].direction).not.toBeDefined();
             expect(vm.sortable.columns['name'].direction).toBe(true);
             expect(cityData[1].name).toBe("Berlin");
             expect(cityData[5].name).toBe("The Hague");

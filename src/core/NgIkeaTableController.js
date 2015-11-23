@@ -62,13 +62,13 @@
             angular.forEach(vm.sortable.columns, function(value,key) {
                 if (key !== column0) {
                     value.direction = undefined;
-                    value.class = vm.setIconClass(true, false, false);
+                    value.class = vm.setIconClass(true, false, false, key);
                 }
             });
         }
 
         vm.sortable.columns[column0].direction = !vm.sortable.columns[column0].direction;
-        vm.sortable.columns[column0].class = vm.setIconClass(false, vm.sortable.columns[column0].direction, !vm.sortable.columns[column0].direction);
+        vm.sortable.columns[column0].class = vm.setIconClass(false, vm.sortable.columns[column0].direction, !vm.sortable.columns[column0].direction, column0);
 
         vm.sortable.predicates = vm.sortable.predicates.filter(function(d) {
             return d.column !== column0;
@@ -122,16 +122,13 @@
 
     /**
      * Convenience method.
-     *
-     * @returns {{direction: undefined, class: {sorting: boolean, sorting_asc: boolean, sorting_desc: boolean}}}
      */
-    NgIkeaTableController.prototype.initSortStatus = function() {
+    NgIkeaTableController.prototype.initSortStatus = function(column0) {
         var vm = this;
-
-        return {
+        vm.sortable.columns[column0] = {
             direction: undefined,
-            class: vm.setIconClass(true, false, false)
-        }
+            class: vm.setIconClass(true, false, false, column0)
+        };
     };
 
     /**
@@ -140,10 +137,11 @@
      * @param {boolean} sorting - display 'sorting available' icon if true
      * @param {boolean} sorting_asc - display 'sort ascending' icon if true
      * @param {boolean} sorting_desc - display 'sort descending' icon if true
+     * @param {string} [column0] - hook to allow users to specify column-specific icon
      *
      * @returns {{glyphicon glyphicon-minus: boolean, glyphicon glyphicon-chevron-up: boolean, glyphicon glyphicon-chevron-down: boolean}}
      */
-    NgIkeaTableController.prototype.setIconClass = function(sorting, sorting_asc, sorting_desc) {
+    NgIkeaTableController.prototype.setIconClass = function(sorting, sorting_asc, sorting_desc, column0) {
         return {
             "glyphicon glyphicon-minus": sorting,
             "glyphicon glyphicon-chevron-up": sorting_asc,
