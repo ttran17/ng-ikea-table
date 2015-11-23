@@ -47,8 +47,8 @@ describe('NgIkeaTableController', function() {
         it('should sort by property name', function() {
             vm.sort({}, 'id');
             expect(vm.sortable.columns['id'].direction).toBe(true);
-            expect(vm.sortable.columns['id'].class["sorting"]).toBe(false);
-            expect(vm.sortable.columns['id'].class["sorting_asc"]).toBe(true);
+            expect(vm.sortable.columns['id'].class["glyphicon glyphicon-minus"]).toBe(false);
+            expect(vm.sortable.columns['id'].class["glyphicon glyphicon-chevron-up"]).toBe(true);
             expect(cityData[1].name).toBe("Amsterdam");
             expect(cityData[4].name).toBe("Rotterdam");
         });
@@ -96,14 +96,14 @@ describe('NgIkeaTableController', function() {
         it('should sort by property name ascending; then by property name descending when event.shiftKey is true', function() {
             vm.sort({}, 'id');
             expect(vm.sortable.columns['id'].direction).toBe(true);
-            expect(vm.sortable.columns['id'].class["sorting"]).toBe(false);
-            expect(vm.sortable.columns['id'].class["sorting_asc"]).toBe(true);
+            expect(vm.sortable.columns['id'].class["glyphicon glyphicon-minus"]).toBe(false);
+            expect(vm.sortable.columns['id'].class["glyphicon glyphicon-chevron-up"]).toBe(true);
             expect(cityData[1].name).toBe("Amsterdam");
             expect(cityData[4].name).toBe("Rotterdam");
             vm.sort({shiftKey: true}, 'id');
             expect(vm.sortable.columns['id'].direction).toBe(false);
-            expect(vm.sortable.columns['id'].class["sorting"]).toBe(false);
-            expect(vm.sortable.columns['id'].class["sorting_desc"]).toBe(true);
+            expect(vm.sortable.columns['id'].class["glyphicon glyphicon-minus"]).toBe(false);
+            expect(vm.sortable.columns['id'].class["glyphicon glyphicon-chevron-down"]).toBe(true);
             expect(cityData[4].name).toBe("Amsterdam");
             expect(cityData[1].name).toBe("Rotterdam");
         });
@@ -120,21 +120,21 @@ describe('NgIkeaTableController', function() {
         it('should sort by country then population; finally by population then descending country', function() {
             vm.sort({}, 'country');
             expect(vm.sortable.columns['country'].direction).toBe(true);
-            expect(vm.sortable.columns['country'].class["sorting"]).toBe(false);
-            expect(vm.sortable.columns['country'].class["sorting_desc"]).toBe(false);
+            expect(vm.sortable.columns['country'].class["glyphicon glyphicon-minus"]).toBe(false);
+            expect(vm.sortable.columns['country'].class["glyphicon glyphicon-chevron-down"]).toBe(false);
             vm.sort({shiftKey: true}, 'population');
             expect(cityData[0].name).toBe("Düsseldorf");
             expect(cityData[5].name).toBe("Amsterdam");
             expect(vm.sortable.columns['country'].direction).toBe(true);
-            expect(vm.sortable.columns['country'].class["sorting"]).toBe(false);
-            expect(vm.sortable.columns['country'].class["sorting_desc"]).toBe(false);
+            expect(vm.sortable.columns['country'].class["glyphicon glyphicon-minus"]).toBe(false);
+            expect(vm.sortable.columns['country'].class["glyphicon glyphicon-chevron-down"]).toBe(false);
             vm.sort({shiftKey: true}, 'country');
             expect(cityData[0].name).toBe("The Hague");
             expect(cityData[2].name).toBe("Rotterdam");
             expect(cityData[3].name).toBe("Stuttgard");
             expect(vm.sortable.columns['country'].direction).toBe(false);
-            expect(vm.sortable.columns['country'].class["sorting"]).toBe(false);
-            expect(vm.sortable.columns['country'].class["sorting_desc"]).toBe(true);
+            expect(vm.sortable.columns['country'].class["glyphicon glyphicon-minus"]).toBe(false);
+            expect(vm.sortable.columns['country'].class["glyphicon glyphicon-chevron-down"]).toBe(true);
         });
     });
 });
