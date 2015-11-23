@@ -90,7 +90,13 @@
         vm.rows.sort(s);
     };
 
-
+    /**
+     * Private method. Probably overkill.
+     *
+     * @param {Object} vm - ViewModel
+     * @param {string} column0
+     * @returns {boolean}
+     */
     var isColumnArgDefined = function(vm, column0) {
         if (column0 === undefined) {
             vm.$log.warn("Calling sort without any column arg is a no-op.");
@@ -129,13 +135,13 @@
     };
 
     /**
-     * Convenience method.
+     * Convenience method. Users should override this method to return their preferred icons.
      *
      * @param {boolean} sorting - display 'sorting available' icon if true
      * @param {boolean} sorting_asc - display 'sort ascending' icon if true
      * @param {boolean} sorting_desc - display 'sort descending' icon if true
      *
-     * @returns {{sorting: boolean, sorting_asc: boolean, sorting_desc: boolean}}
+     * @returns {{glyphicon glyphicon-minus: boolean, glyphicon glyphicon-chevron-up: boolean, glyphicon glyphicon-chevron-down: boolean}}
      */
     NgIkeaTableController.prototype.setIconClass = function(sorting, sorting_asc, sorting_desc) {
         return {
