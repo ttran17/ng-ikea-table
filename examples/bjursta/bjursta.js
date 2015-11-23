@@ -16,6 +16,15 @@ angular.module('ng.ikeaTable.example.bjursta')
                     {name: 'Atle Selberg', age: 90, nationality: 'Norwegian', canon: 'Fields Medal', death: 'natural'}
                 ];
 
+                // Override prototype definition
+                scope.vm.setIconClass = function(sorting, sorting_asc, sorting_desc) {
+                    return {
+                        "sorting": sorting,
+                        "sorting_asc": sorting_asc,
+                        "sorting_desc": sorting_desc
+                    }
+                };
+
                 scope.vm.sortable.columns = {
                     'name': scope.vm.initSortStatus(),
                     'age': scope.vm.initSortStatus(),
