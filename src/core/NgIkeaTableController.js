@@ -139,13 +139,14 @@
      */
     NgIkeaTableController.prototype.setIconClass = function(sorting, sorting_asc, sorting_desc) {
         return {
-            "sorting": sorting,
-            "sorting_asc": sorting_asc,
-            "sorting_desc": sorting_desc
+            "glyphicon glyphicon-minus": sorting,
+            "glyphicon glyphicon-chevron-up": sorting_asc,
+            "glyphicon glyphicon-chevron-down": sorting_desc
         }
     };
 
     /**
+     * Convenience method.
      *
      * @param {string} column0
      * @returns {string}
