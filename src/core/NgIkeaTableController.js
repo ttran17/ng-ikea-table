@@ -42,6 +42,11 @@
             columns: {},
             predicates: []
         };
+
+        vm.filterable = {
+            columns: {},
+            predicates: []
+        }
     };
 
     NgIkeaTableController.prototype.setRows = function(rows0) {
@@ -180,6 +185,29 @@
         var vm = this;
         return vm.sortable.columns[column0].class;
     };
+
+    NgIkeaTableController.prototype.setFilter = function(column0, predicate0) {
+        var vm = this;
+
+        var regex = new RegExp(predicate0,"i");
+
+        vm.filterable.columns[column0] = regex;
+    };
+
+    NgIkeaTableController.prototype.filter = function() {
+        var vm = this;
+
+        vm.rows = [].concat(vm.originalRows);
+
+        angular.forEach(vm.filterable.columns, function(regex, column) {
+            vm.rows = vm.rows.filter(function(row) {
+                return regex.test(row[column])
+            })
+        });
+
+        vm.commit();
+    };
+
 
     ///////////////////////////////////////////////////////////////
      // Begin: define controller via angular controller service
