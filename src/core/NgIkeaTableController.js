@@ -8,8 +8,11 @@
      *      angular's built in orderBy filter for sorting lacks capability for multiple reverse
      *      so use microlibrary by Teun Duynstee {@link https://github.com/teun} instead
      *
-     * @type {Array} vm.rows
+     * @type {Array} vm.originalRows
      *      the underlying array for the table
+     *
+     * @type {Array} vm.rows
+     *      the workspace array for sorting and filtering
      *
      * @type {Array} vm.renderableRows
      *      the array that is actually rendered on-screen in the table
@@ -29,6 +32,8 @@
 
         vm.teunSort = teunSort;
 
+        vm.originalRows = [];
+
         vm.rows = [];
 
         vm.renderableRows = [];
@@ -37,6 +42,20 @@
             columns: {},
             predicates: []
         };
+    };
+
+    NgIkeaTableController.prototype.setRows = function(rows0) {
+        var vm = this;
+        vm.originalRows = [].concat(rows0);
+        vm.rows = [].concat(rows0);
+    };
+
+    /**
+     * Commits changes to renderable rows.
+     */
+    NgIkeaTableController.prototype.commit = function() {
+        var vm = this;
+        vm.renderableRows = vm.rows;
     };
 
     /**
@@ -74,7 +93,7 @@
             return d.column !== column0;
         });
         vm.sortable.predicates.push({
-            column: column0,
+            column: column0, // TODO: why is this needed?
             predicate: predicate0,
             descending: vm.sortable.columns[column0].direction ? 1 : -1
         });
@@ -88,6 +107,8 @@
             }
         });
         vm.rows.sort(s);
+
+        vm.commit();
     };
 
     /**
@@ -164,10 +185,10 @@
      // Begin: define controller via angular controller service
      //
 
-    NgIkeaTableController.$inject = ['$log','teunSort'];
+    NgIkeaTableController.$inject = ['$log', 'teunSort'];
 
     angular.module('ng.ikeaTable.core')
-        .controller('NgIkeaTableController',NgIkeaTableController);
+        .controller('NgIkeaTableController', NgIkeaTableController);
 
      //
      // End: define controller
