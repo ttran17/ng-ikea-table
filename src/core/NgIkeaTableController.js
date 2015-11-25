@@ -61,6 +61,8 @@
     NgIkeaTableController.prototype.commit = function() {
         var vm = this;
         vm.renderableRows = vm.rows;
+
+        vm.paginate();
     };
 
     /**
@@ -205,9 +207,17 @@
             })
         });
 
+        // TODO: filtering should reset all sort icons
         vm.commit();
     };
 
+    NgIkeaTableController.prototype.paginate = function() {
+        var vm = this;
+
+        var begin = (vm.currentPageNum-1)*vm.itemsPerPage;
+        var end = begin + vm.itemsPerPage;
+        vm.renderableRows = vm.renderableRows.slice(begin,end);
+    };
 
     ///////////////////////////////////////////////////////////////
      // Begin: define controller via angular controller service

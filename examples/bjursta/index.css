@@ -15,3 +15,18 @@ th {
     display: block;
     opacity: 0.5;
 }
+
+.table-length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.table-length select {
+    width: 75px;
+    display: inline-block;
+}
+
+.table-pagination .pagination {
+    margin: 0px;
+}
