@@ -8,14 +8,8 @@
      *      angular's built in orderBy filter for sorting lacks capability for multiple reverse
      *      so use microlibrary by Teun Duynstee {@link https://github.com/teun} instead
      *
-     * @type {Array} vm.originalRows
-     *      the underlying array for the table
-     *
      * @type {Array} vm.rows
      *      the workspace array for sorting and filtering
-     *
-     * @type {Array} vm.renderableRows
-     *      the array that is actually rendered on-screen in the table
      *
      * @type {{columns: {}, predicates: Array}} vm.sortable
      *      columns is an objec that holds column-specific state & info
@@ -32,7 +26,7 @@
 
         vm.teunSort = teunSort;
 
-        vm.originalRows = [];
+        //vm.originalRows = [];
 
         vm.rows = [];
 
@@ -43,27 +37,34 @@
             predicates: []
         };
 
-        vm.filterable = {
-            columns: {},
-            predicates: []
-        }
+        //vm.filterable = {
+        //    columns: {},
+        //    predicates: []
+        //}
     };
 
     NgIkeaTableController.prototype.setRows = function(rows0) {
         var vm = this;
-        vm.originalRows = [].concat(rows0);
+        //vm.originalRows = [].concat(rows0);
         vm.rows = [].concat(rows0);
     };
 
-    /**
-     * Commits changes to renderable rows.
-     */
-    NgIkeaTableController.prototype.commit = function() {
+    NgIkeaTableController.prototype.getRows = function() {
         var vm = this;
-        vm.renderableRows = vm.rows;
-
-        vm.paginate();
+        return vm.rows;
     };
+
+    ///**
+    // * Commits changes to renderable rows.
+    // */
+    //NgIkeaTableController.prototype.commit = function() {
+    //    var vm = this;
+    //    vm.$log.debug("Committing!");
+    //
+    //    vm.renderableRows = vm.rows;
+    //
+    //    //vm.paginate();
+    //};
 
     /**
      * For use with ng-click (e.g. ng-click="controller.sort($event, 'col0')").
@@ -105,7 +106,7 @@
             descending: vm.sortable.columns[column0].direction ? 1 : -1
         });
 
-        var s;
+        var s = null;
         vm.sortable.predicates.forEach(function(d,i) {
             if (i > 0) {
                 s = s.thenBy(d.predicate, d.descending);
@@ -114,8 +115,6 @@
             }
         });
         vm.rows.sort(s);
-
-        vm.commit();
     };
 
     /**
@@ -150,6 +149,8 @@
 
     /**
      * Convenience method.
+     *
+     * @param {string} column0
      */
     NgIkeaTableController.prototype.initSortStatus = function(column0) {
         var vm = this;
@@ -188,36 +189,38 @@
         return vm.sortable.columns[column0].class;
     };
 
-    NgIkeaTableController.prototype.setFilter = function(column0, predicate0) {
-        var vm = this;
+    //NgIkeaTableController.prototype.setFilter = function(column0, predicate0) {
+    //    var vm = this;
+    //
+    //    var regex = new RegExp(predicate0,"i");
+    //
+    //    vm.filterable.columns[column0] = regex;
+    //};
+    //
+    //NgIkeaTableController.prototype.filter = function() {
+    //    var vm = this;
+    //
+    //    vm.rows = [].concat(vm.originalRows);
+    //
+    //    angular.forEach(vm.filterable.columns, function(regex, column) {
+    //        vm.rows = vm.rows.filter(function(row) {
+    //            return regex.test(row[column])
+    //        })
+    //    });
+    //
+    //    // TODO: filtering should reset all sort icons
+    //    vm.commit();
+    //};
 
-        var regex = new RegExp(predicate0,"i");
-
-        vm.filterable.columns[column0] = regex;
-    };
-
-    NgIkeaTableController.prototype.filter = function() {
-        var vm = this;
-
-        vm.rows = [].concat(vm.originalRows);
-
-        angular.forEach(vm.filterable.columns, function(regex, column) {
-            vm.rows = vm.rows.filter(function(row) {
-                return regex.test(row[column])
-            })
-        });
-
-        // TODO: filtering should reset all sort icons
-        vm.commit();
-    };
-
-    NgIkeaTableController.prototype.paginate = function() {
-        var vm = this;
-
-        var begin = (vm.currentPageNum-1)*vm.itemsPerPage;
-        var end = begin + vm.itemsPerPage;
-        vm.renderableRows = vm.renderableRows.slice(begin,end);
-    };
+    //NgIkeaTableController.prototype.paginate = function() {
+    //    var vm = this;
+    //
+    //    var begin = (vm.currentPageNum-1)*vm.itemsPerPage.length;
+    //    var end = begin + vm.itemsPerPage.length;
+    //    vm.renderableRows = vm.renderableRows.slice(begin,end);
+    //
+    //    vm.totalItems = vm.rows.length;
+    //};
 
     ///////////////////////////////////////////////////////////////
      // Begin: define controller via angular controller service
