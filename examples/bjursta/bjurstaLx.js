@@ -591,7 +591,16 @@ angular.module('ng.ikeaTable.example.bjursta')
 
                 vm.totalItems = people.length;
                 vm.currentPageNum = 1;
-                vm.itemsPerPage = 10;
+                //vm.itemsPerPage = 10;
+
+                vm.options = [
+                    {id: 0, length: 5},
+                    {id: 1, length: 10},
+                    {id: 2, length: 25},
+                    {id: 3, length: 50}
+                ];
+
+                vm.itemsPerPage = vm.options[1];
 
                 vm.commit();
             }

@@ -20,16 +20,18 @@ angular.module('ng.ikeaTable.example.tärendö',['ng.ikeaTable.core'])
                     {name: 'Stanislaw Ulam', age: 75, nationality: 'Polish', canon: 'Borsuk-Ulam Theorem', death: 'natural'},
                     {name: 'Atle Selberg', age: 90, nationality: 'Norwegian', canon: 'Fields Medal', death: 'natural'}
                 ];
+                
+                var vm = scope.vm;
 
-                scope.vm.setRows(rows);
+                vm.setRows(rows);
 
-                scope.vm.initSortStatus('name');
-                scope.vm.initSortStatus('age');
-                scope.vm.initSortStatus('nationality');
-                scope.vm.initSortStatus('canon');
-                scope.vm.initSortStatus('death');
+                vm.initSortStatus('name');
+                vm.initSortStatus('age');
+                vm.initSortStatus('nationality');
+                vm.initSortStatus('canon');
+                vm.initSortStatus('death');
 
-                scope.vm.commit();
+                vm.commit();
             }
         }
     }]);

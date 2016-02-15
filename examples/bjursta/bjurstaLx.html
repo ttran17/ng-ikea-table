@@ -1,42 +1,46 @@
 <div class="row">
-    <table class="table table-bordered table-striped table-hover">
-        <caption>Your Advertisement Here!</caption>
-        <thead>
-        <tr>
-            <th ng-click="vm.sort($event,'name')">Name <i class="sorting-icon" ng-class="vm.getIconClass('name')"></i></th>
-            <th ng-click="vm.sort($event,'age')">Age <i class="sorting-icon" ng-class="vm.getIconClass('age')"></i></th>
-            <th ng-click="vm.sort($event,'birthdate')">Death <i class="sorting-icon" ng-class="vm.getIconClass('birthdate')"></i></th>
-        </tr>
-        <tr>
-            <th><form><input class="form-control" placeholder="Search name" ng-model="fm.name"ng-keypress="$event.keyCode === 13 && vm.applyFilter('name')"></form></th>
-            <th><form><input class="form-control" placeholder="Search age" ng-model="fm.age"ng-keypress="$event.keyCode === 13 && vm.applyFilter('age')"></form></th>
-            <th><form><input class="form-control" placeholder="Search birthdate" ng-model="fm.birthdate"ng-keypress="$event.keyCode === 13 && vm.applyFilter('birthdate')"></form></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="row in vm.renderableRows">
-            <td> {{::row.name}} </td>
-            <td> {{::row.age}} </td>
-            <td> {{::row.birthdate.substring(0,10)}} </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="col-lg-12">
+        <table class="table table-bordered table-striped table-hover">
+            <caption>Your Advertisement Here!</caption>
+            <thead>
+            <tr>
+                <th ng-click="vm.sort($event,'name')">Name <i class="sorting-icon" ng-class="vm.getIconClass('name')"></i></th>
+                <th ng-click="vm.sort($event,'age')">Age <i class="sorting-icon" ng-class="vm.getIconClass('age')"></i></th>
+                <th ng-click="vm.sort($event,'birthdate')">Death <i class="sorting-icon" ng-class="vm.getIconClass('birthdate')"></i></th>
+            </tr>
+            <tr>
+                <th><form><input class="form-control" placeholder="Search name" ng-model="fm.name"ng-keypress="$event.keyCode === 13 && vm.applyFilter('name')"></form></th>
+                <th><form><input class="form-control" placeholder="Search age" ng-model="fm.age"ng-keypress="$event.keyCode === 13 && vm.applyFilter('age')"></form></th>
+                <th><form><input class="form-control" placeholder="Search birthdate" ng-model="fm.birthdate"ng-keypress="$event.keyCode === 13 && vm.applyFilter('birthdate')"></form></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in vm.renderableRows">
+                <td ng-if="row.age === vm.XXX"> {{::row.name}} is {{::vm.XXX}}
+                    <ng-include src="'foobar.html'"></ng-include>
+                </td>
+                <td ng-if="row.age !== vm.XXX"> {{::row.name}} is kablooey {{::vm.XXX}}!</td>
+                <td> {{::row.age}} </td>
+                <td> {{::row.birthdate.substring(0,10)}} </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-4 table-length">
-            <label>
+            <label for="table-length-options">
                 Show
-                <select name="tap-query-results_length" aria-controls="tap-query-results" class="form-control input-sm">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                <select ng-options="option.length for option in vm.options" ng-model="vm.itemsPerPage" ng-change="vm.commit()" class="form-control input-sm" id="table-length-options">
+                    <!--<option value="{{10*1}}">10</option>-->
+                    <!--<option value="{{25*1}}">25</option>-->
+                    <!--<option value="{{50*1}}">50</option>-->
                 </select>
                 entries
             </label>
     </div>
     <div class="col-lg-8 table-pagination">
-        <uib-pagination class="pull-right" total-items="vm.totalItems" ng-change="vm.commit()" ng-model="vm.currentPageNum" items-per-page="vm.itemsPerPage" max-size="5" boundary-links="true" rotate="false"></uib-pagination>
+        <uib-pagination class="pull-right" total-items="vm.totalItems" ng-change="vm.commit()" ng-model="vm.currentPageNum" items-per-page="vm.itemsPerPage.length" max-size="5" boundary-links="true" rotate="false"></uib-pagination>
     </div>
 </div>
 
